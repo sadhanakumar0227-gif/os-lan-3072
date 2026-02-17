@@ -1,0 +1,116 @@
+UNIX General Commands:
+1. Date Command:
+This command is used to display the current data and time.
+Syntax:
+$date
+2. Calender Command:
+This command is used to display the calendar of the year or the particular month of
+calendar year.
+Syntax:
+a. $cal &lt;year&gt;
+b. $cal &lt;month&gt; &lt;year&gt;
+Here the first syntax gives the entire calendar for given year &amp; the second Syntax gives
+the calendar of reserved month of that year.
+3. Echo Command:
+This command is used to print the arguments on the screen.
+Syntax:
+$echo &lt;text&gt;
+4. Banner Command:
+It is used to display the text in ‘#’ symbol .It displays the text in the form of a banner.
+Syntax :
+$banner &lt;arguments&gt;
+5.’who’ Command:
+It is used to display who are the users connected to our computer currently.
+Syntax:
+$who
+6.’who am i’ Command:
+Display the details of the current working directory.
+Syntax:
+$who am i
+7.’tty’ Command:
+It will display the terminal name.
+Syntax:
+$tty
+8.’CLEAR’ Command:
+It is used to clear the screen.
+Syntax:
+$clear
+9.’MAN’ Command:
+It helps us to know about the particular command and its options &amp; working. It is like
+‘help’ command in windows.
+
+6
+
+Syntax:
+$man &lt;command name&gt;
+10. LIST Command:
+It is used to list all the contents in the current working directory.
+Syntax:
+$ ls – options &lt;arguments&gt;
+If the command does not contain any argument means it is working in the Current
+directory.
+Options:
+a– used to list all the files including the hidden files.
+c– list all the files column wise.
+d- list all the directories.
+m- list the files separated by commas.
+p- list files include ‘/’ to all the directories.
+r- list the files in reverse alphabetical order.
+f- list the files based on the list modification date.
+x-list in column wise sorted order.
+Directory Related Commands:
+1. Present Working Directory Command:
+To print the complete path of the current working directory.
+Syntax:
+$pwd
+2. MKDIR Command:
+To create or make a new directory in a current directory.
+Syntax:
+$mkdir &lt;directory name&gt;
+3. CD Command:
+To change or move the directory to the mentioned directory .
+Syntax :
+$cd &lt;directory name&gt;.
+4. RMDIR Command:
+To remove a directory in the current directory &amp; not the current directory itself.
+Syntax:
+$rmdir &lt;directory name&gt;
+FILE RELATED COMMANDS:
+1. CREATE A FILE:
+To create a new file in the current directory we use CAT command.
+Syntax:
+$cat &gt; filename.
+2. DISPLAY A FILE:
+To display the content of file mentioned we use CAT command without ‘&gt;’ operator.
+Syntax:
+$cat filename.
+3. COPYING CONTENTS:
+To copy the content of one file with another. If file doesnot exist, a new file is created
+and if the file exists with some data then it is overwritten.
+Syntax :
+$ cat &lt;source filename&gt; &gt;&gt; &lt;destination filename&gt;
+
+7
+
+4. SORTING A FILE:
+To sort the contents in alphabetical order in reverse order.
+Syntax:
+$sort &lt;filename &gt;
+Option: $ sort –r &lt;filename&gt;
+5. COPYING CONTENTS FROM ONE FILE TO ANOTHER:
+To copy the contents from source to destination file so that both contents are same.
+Syntax: $cp &lt;source filename&gt; &lt;destination filename&gt;
+$cp &lt;source filename path &gt; &lt;destination filename path&gt;
+6. MOVE Command:
+To completely move the contents from source file to destination file and to remove the
+source file.
+Syntax:
+$ mv &lt;source filename&gt; &lt;destination filename&gt;
+7. REMOVE Command:
+To permanently remove the file we use this command.
+Syntax:
+$rm &lt;filename&gt;
+8. WORD Command:
+To list the content count of no of lines, words, characters.
+Syntax:
+$wc&lt;filename&gt;
