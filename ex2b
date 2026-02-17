@@ -1,0 +1,68 @@
+Shell Programming
+Aim:
+To write the shell programs for the following
+a) Find the greatest numbers
+b) Sum of ‘n’ numbers
+c) Swapping of 2 numbers
+d) Checking whether the number is positive or negative
+
+a. Find the greatest numbers
+Program:
+echo “Enter 2 numbers”
+read a b
+if [ $a –gt $b ]
+then
+echo “$a is greater”
+else
+echo “$b is greater”
+fi
+Output:
+Enter 2 numbers
+3 7
+7 is greater
+
+8
+
+b. Sum of n numbers:
+Program:
+echo &quot;Enter limit&quot;
+read n
+i=1
+sum=0
+while [ $i -le $n ]
+do
+let sum=$sum+$i
+let i=$i+1
+done
+echo &quot;The sum of $n numbers is $sum&quot;
+Output:
+Enter limit
+5
+The sum of 5 numbers is 15
+c. Swapping of two numbers:
+Program:
+echo &quot;Enter two numbers&quot;
+read a b
+t=$a
+a=$b
+b=$t
+echo &quot;a=$a b=$b&quot;
+Output:
+Enter two numbers
+4 7
+a=7
+b=4
+d. Checking the number is positive or negative:
+Program:
+echo &quot;Enter a number&quot;
+read a
+if [ $a -ge 0 ]
+then
+echo &quot;$a is positive&quot;
+else
+echo &quot;$a is negative&quot;
+fi
+Output:
+Enter a number
+5
+5 is positive
