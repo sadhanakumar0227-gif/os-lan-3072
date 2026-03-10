@@ -223,3 +223,195 @@ int main() {
     return 0;
 }
 
+ex 6
+#include <stdio.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <stdlib.h>
+
+// Global variables
+sem_t mutex;
+int shared_resource = 0;
+
+void *thread_function(void *arg) {
+    int i, val;
+    long thread_id = (long)arg;
+
+    for (i = 0; i < 5; i++) {
+        // Entry Section: Lock the semaphore
+        sem_wait(&mutex);
+
+        // Critical Section
+        val = shared_resource;
+        printf("Thread %ld: Read %d from shared resource\n", thread_id, val);
+       
+        val++;
+        printf("Thread %ld: Writing %d to shared resource\n", thread_id, val);
+        fflush(stdout);
+       
+        shared_resource = val;
+
+        // Exit Section: Release the semaphore
+        sem_post(&mutex);
+    }
+    pthread_exit(NULL);
+}
+
+int main() {
+    pthread_t threads[3];
+    int i, ret;
+
+    // Initialize semaphore to 1 (Binary Semaphore/Mutex)
+    // The second 0 means it's shared between threads, not processes
+    sem_init(&mutex, 0, 1);
+
+    // Create 3 threads
+    for (i = 0; i < 3; i++) {
+        ret = pthread_create(&threads[i], NULL, thread_function, (void *)(long)i);
+        if (ret != 0) {
+            perror("pthread_create failed");
+            return -1;
+        }
+    }
+
+    // Wait for all threads to finish
+    for (i = 0; i < 3; i++) {
+        ret = pthread_join(threads[i], NULL);
+        if (ret != 0) {
+            perror("pthread_join failed");
+            return -1;
+        }
+    }
+
+    sem_destroy(&mutex);
+    printf("Final Shared Resource Value: %d\n", shared_resource);
+    return 0;
+}
+
+ex 7
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int p, r, m, z, k, buf;
+int a[10], avail[10], max[10][10], alloc[10][10], need[10][10];
+int i, j, top;
+
+void get()
+{
+    printf("\nENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &p);
+
+    printf("\nENTER THE NUMBER OF RESOURCE TYPES: ");
+    scanf("%d", &r);
+
+    for (j = 0; j < r; j++)
+    {
+        printf("\nENTER THE NUMBER OF RESOURCES FOR TYPE %d : ", j + 1);
+        scanf("%d", &avail[j]);
+    }
+
+    for (i = 0; i < p; i++)
+    {
+        printf("\nENTER THE MAXIMUM NUMBER OF RESOURCES REQUIRED FOR PROCESS %d:\n", i + 1);
+        for (j = 0; j < r; j++)
+        {
+            printf("For Resource type %d :", j + 1);
+            scanf("%d", &max[i][j]);
+        }
+    }
+
+    printf("\nENTER THE ALLOCATED INSTANCES:\n");
+    for (i = 0; i < p; i++)
+    {
+        printf("\nPROCESS %d:\n", i + 1);
+        printf("-------------\n");
+
+        for (j = 0; j < r; j++)
+        {
+            printf("Resource Type - %d :", j + 1);
+            scanf("%d", &m);
+
+            if (m <= avail[j])
+            {
+                alloc[i][j] = m;
+                avail[j] = avail[j] - m;
+            }
+            else
+            {
+                printf("ALLOCATION EXCEEDS AVAILABLE RESOURCES.\n");
+                j--;
+            }
+        }
+    }
+}
+
+void disp1()
+{
+    printf("\nNEEDED RESOURCES:\n");
+    printf("-----------------\n");
+
+    for (i = 0; i < p; i++)
+    {
+        printf("Process %d:\t", i + 1);
+
+        for (j = 0; j < r; j++)
+        {
+            need[i][j] = max[i][j] - alloc[i][j];
+            printf("%d ", need[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void seqnc()
+{
+    top = 0;
+
+    while (top < p)
+    {
+        for (i = 0; i < p; i++)
+        {
+            buf = 0;
+            z = 0;
+
+            for (j = 0; j < r; j++)
+            {
+                z += need[i][j];
+
+                if (need[i][j] <= avail[j])
+                    buf++;
+            }
+
+            if (buf == r && z != 0)
+            {
+                a[top] = i;
+                top++;
+
+                for (k = 0; k < r; k++)
+                {
+                    avail[k] += alloc[i][k];
+                    need[i][k] = 0;
+                }
+            }
+        }
+    }
+}
+
+void disp2()
+{
+    printf("\nThe Safe Sequence is:\n");
+
+    for (i = 0; i < p; i++)
+        printf("P%d ", a[i]);
+}
+
+int main()
+{
+    get();
+    disp1();
+    seqnc();
+    disp2();
+
+    return 0;
+}
