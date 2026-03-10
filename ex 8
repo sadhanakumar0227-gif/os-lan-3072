@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 10
+
+int main()
+{
+    int p, r;
+    int alloc[MAX][MAX], request[MAX][MAX];
+    int avail[MAX], work[MAX];
+    bool finish[MAX];
+
+    printf("Enter number of processes: ");
+    scanf("%d", &p);
+
+    printf("Enter number of resources: ");
+    scanf("%d", &r);
+
+    printf("Enter Allocation Matrix:\n");
+    for (int i = 0; i < p; i++)
+        for (int j = 0; j < r; j++)
+            scanf("%d", &alloc[i][j]);
+
+    printf("Enter Request Matrix:\n");
+    for (int i = 0; i < p; i++)
+        for (int j = 0; j < r; j++)
+            scanf("%d", &request[i][j]);
+
+    printf("Enter Available Resources:\n");
+    for (int i = 0; i < r; i++)
+        scanf("%d", &avail[i]);
+
+    for (int i = 0; i < p; i++)
+        finish[i] = false;
+
+    for (int i = 0; i < r; i++)
+        work[i] = avail[i];
+
+    bool changed;
+    do
+    {
+        changed = false;
+        for (int i = 0; i < p; i++)
+        {
+            if (!finish[i])
+            {
+                bool possible = true;
+                for (int j = 0; j < r; j++)
+                {
+                    if (request[i][j] > work[j])
+                    {
+                        possible = false;
+                        break;
+                    }
+                }
+
+                if (possible)
+                {
+                    for (int j = 0; j < r; j++)
+                        work[j] += alloc[i][j];
+
+                    finish[i] = true;
+                    changed = true;
+                }
+            }
+        }
+    } while (changed);
+
+    printf("Deadlocked processes: ");
+    for (int i = 0; i < p; i++)
+        if (!finish[i])
+            printf("P%d ", i);
+
+    return 0;
+}
